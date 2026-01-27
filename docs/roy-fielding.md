@@ -105,8 +105,8 @@ Isso é o coração da tese.
 
 ## O ponto mais importante (e mais honesto)
 
-👉 **REST não é um selo de qualidade.**
-👉 É um **trade-off**.
+**REST não é um selo de qualidade.**
+É um **trade-off**.
 
 HATEOAS:
 

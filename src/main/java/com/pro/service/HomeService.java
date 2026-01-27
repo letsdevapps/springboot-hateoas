@@ -3,6 +3,9 @@ package com.pro.service;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.pro.dto.HomeDTO;
@@ -18,6 +21,15 @@ public class HomeService {
 
 	public List<HomeDTO> getAllMessages() {
 		return homeDtoList;
+	}
+
+	public Page<HomeDTO> getAllMessages(Pageable pageable) {
+		int start = (int) pageable.getOffset();
+		int end = Math.min((start + pageable.getPageSize()), homeDtoList.size());
+
+		List<HomeDTO> pageContent = homeDtoList.subList(start, end);
+
+		return new PageImpl<>(pageContent, pageable, homeDtoList.size());
 	}
 
 	private void init() {

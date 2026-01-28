@@ -16,7 +16,8 @@ public class HomeDTOAssembler implements RepresentationModelAssembler<HomeDTO, E
     @Override
     public EntityModel<HomeDTO> toModel(HomeDTO homeDTO) {
         return EntityModel.of(homeDTO,
-        		linkTo(methodOn(HomeApi.class).index()).withSelfRel(),// Link para o próprio recurso
-        		linkTo(methodOn(HomeApi.class).getAllMessagesAssembler()).withRel("all-messages"));// Link para todas as mensagens
+        		linkTo(methodOn(HomeApi.class).index()).withRel("index"),// Link para o próprio recurso
+        		linkTo(methodOn(HomeApi.class).getAllMessagesAssembler()).withRel("all-messages")// Link para todas as mensagens
+        		);
     }
 }

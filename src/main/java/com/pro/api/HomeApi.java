@@ -74,12 +74,18 @@ public class HomeApi {
 				.collect(Collectors.toList());
 
 		CollectionModel<EntityModel<HomeDTO>> collectionModel = CollectionModel.of(userResources);
+		
+		//lembrar de adicionar o self a paginação tambem
+		collectionModel.add(WebMvcLinkBuilder.linkTo(
+				WebMvcLinkBuilder.methodOn(HomeApi.class).getAllMessages(page, size)).withSelfRel());
 
 		if (pageResult.hasNext()) {
-			collectionModel.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(HomeApi.class).getAllMessages(page + 1, size)).withRel("next"));
+			collectionModel.add(WebMvcLinkBuilder.linkTo(
+					WebMvcLinkBuilder.methodOn(HomeApi.class).getAllMessages(page + 1, size)).withRel("next"));
 		}
 		if (pageResult.hasPrevious()) {
-			collectionModel.add(WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(HomeApi.class).getAllMessages(page - 1, size)).withRel("prev"));
+			collectionModel.add(WebMvcLinkBuilder.linkTo(
+					WebMvcLinkBuilder.methodOn(HomeApi.class).getAllMessages(page - 1, size)).withRel("prev"));
 		}
 
 		return collectionModel;

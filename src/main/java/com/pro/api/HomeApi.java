@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.pro.dto.HomeDTO;
+import com.pro.dto.assembler.HomeCollectionAssembler;
 import com.pro.dto.assembler.HomeDTOAssembler;
 import com.pro.service.HomeService;
 
@@ -31,6 +32,9 @@ public class HomeApi {
 
 	@Autowired
 	private HomeDTOAssembler homeDTOAssembler;
+	
+	@Autowired
+	private HomeCollectionAssembler homeCollectionAssembler;
 
 	@GetMapping({ "", "/", "/index" })
 	public EntityModel<HomeDTO> index() {

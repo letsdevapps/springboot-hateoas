@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta name="description" content="Pagina Inicial da aplicação">
+    <meta name="keywords" content="pagina-inicial, pagina-home, inicio, home, inicial, index, ...">
+    <meta name="author" content="Dev Academy">
+    <meta name="revisit-after" content="60 days">
+    <meta name="ROBOTS" content="INDEX, FOLLOW">
+    <link rel="icon" th:href="@{/ico/favicon.ico}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Home | Inicio</title>
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        .body-align {
+/*             border: 2px solid #000000; */
+            padding-top: 2%;
+            padding-left: 5%;
+            padding-right: 5%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+	<div class="body-align">
+		<div class="w3-container" style="min-height: 400px;">
+			<h1>Home | Inicio</h1>
+
+		    <h2>Lista de Mensagens</h2>
+
+			<!-- Formulário de pesquisa -->
+			<form action="#" th:action="@{/home}" method="get">
+			    <label for="searchText">Buscar Mensagens:</label>
+			    <input type="text" id="searchText" name="searchText" th:value="${searchText}" placeholder="Digite o texto para buscar..."/>
+			    <button type="submit">Buscar</button>
+			</form>
+			
+			<!-- Exibição das mensagens -->
+			<ul>
+			    <li th:each="msg : ${apiResponse['_embedded']['homeDTOList']}">
+			        <span th:text="${msg['message']}"></span>
+			    </li>
+			</ul>
+			
+			<!-- Links de paginação -->
+			<div>
+			    <a th:if="${apiResponse['_links']['prev'] != null}"
+			       th:href="@{/home(page=${apiResponse['_links']['prev']['href'].split('page=')[1].split('&')[0]}, searchText=${searchText})}">
+			       Anterior
+			    </a>
+			
+			    <a th:if="${apiResponse['_links']['next'] != null}"
+			       th:href="@{/home(page=${apiResponse['_links']['next']['href'].split('page=')[1].split('&')[0]}, searchText=${searchText})}">
+			       Próxima
+			    </a>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

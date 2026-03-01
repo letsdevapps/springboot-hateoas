@@ -2,6 +2,14 @@
 
 Demonstração do uso de HATEOAS para um projeto Springboot REST
 
+## Frontend
+
+### Home Message
+
+* Indice
+
+	http://localhost:8080/
+
 ## Endpoints API
 
 ### Home Message

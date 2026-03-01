@@ -31,16 +31,13 @@
 </div>
 
 <div class="w3-container w3-margin-top" style="min-height: 400px;">
-
     <!-- Card principal -->
     <div class="w3-card w3-white w3-padding w3-round-large">
-
         <h3 class="w3-text-dark-grey">Lista de Mensagens</h3>
 
         <!-- 🔎 Formulário de pesquisa -->
         <form class="w3-row w3-margin-bottom"
               th:action="@{/home}" method="get">
-
             <div class="w3-col s9">
                 <input class="w3-input w3-border w3-round"
                        type="text"
@@ -48,28 +45,22 @@
                        th:value="${searchText}"
                        placeholder="Digite o texto para buscar..."/>
             </div>
-
             <div class="w3-col s3">
                 <button class="w3-button w3-blue w3-round w3-block"
                         type="submit">
                     Buscar
                 </button>
             </div>
-
         </form>
 
         <!-- 📄 Lista de mensagens -->
         <ul class="w3-ul w3-hoverable w3-card-4 w3-round">
-
             <li class="w3-padding"
                 th:each="msg : ${apiResponse['_embedded']['homeDTOList']}">
-
                 <span class="w3-text-grey"
                       th:text="${msg['message']}">
                 </span>
-
             </li>
-
         </ul>
 
         <!-- ⚠ Caso não tenha mensagens -->
@@ -80,7 +71,6 @@
 
         <!-- 🔁 Paginação -->
         <div class="w3-center w3-margin-top">
-
             <a class="w3-button w3-light-grey w3-round w3-margin-right"
                th:if="${apiResponse['_links']['prev'] != null}"
                th:href="@{/home(page=${apiResponse['_links']['prev']['href'].split('page=')[1].split('&')[0]}, searchText=${searchText})}">
@@ -92,9 +82,7 @@
                th:href="@{/home(page=${apiResponse['_links']['next']['href'].split('page=')[1].split('&')[0]}, searchText=${searchText})}">
                 Próxima ▶
             </a>
-
         </div>
-
     </div>
 </div>
 </body>

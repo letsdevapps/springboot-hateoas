@@ -22,13 +22,13 @@ public class HomeCollectionAssembler {
         this.homeDTOAssembler = homeDTOAssembler;
     }
 
-    public CollectionModel<EntityModel<HomeDTO>> toCollectionModel(Iterable<? extends HomeDTO> entities, int page, int size) {
+    public CollectionModel<EntityModel<HomeDTO>> toCollectionModel(Iterable<? extends HomeDTO> entities, String searchText, int page, int size) {
         List<EntityModel<HomeDTO>> entityModels = StreamSupport.stream(entities.spliterator(), false)
             .map(homeDTOAssembler::toModel)  // Usa o assembler do item para cada item
             .collect(Collectors.toList());
 
         // Link 'self' para a coleção de recursos
         return CollectionModel.of(entityModels,
-                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(HomeApi.class).getAllMessages(page, size)).withSelfRel());
+                WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(HomeApi.class).getAllMessages(searchText, page, size)).withSelfRel());
     }
 }

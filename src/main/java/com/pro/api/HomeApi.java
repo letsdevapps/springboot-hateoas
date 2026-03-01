@@ -38,7 +38,7 @@ public class HomeApi {
 
 	@GetMapping({ "", "/", "/index" })
 	public EntityModel<HomeDTO> index() {
-		HomeDTO homeDto = new HomeDTO("Springboot HATEOAS Home | Index");
+		HomeDTO homeDto = new HomeDTO("Springboot HATEOAS API Home | Index");
 
 		return EntityModel.of(homeDto,
 				WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(HomeApi.class).index()).withSelfRel());
@@ -69,10 +69,10 @@ public class HomeApi {
 	}
 
 	@GetMapping("/messages/pag")
-	public CollectionModel<EntityModel<HomeDTO>> getAllMessages(@RequestParam int page, @RequestParam int size) {
+	public CollectionModel<EntityModel<HomeDTO>> getAllMessages(@RequestParam String searchText, @RequestParam int page, @RequestParam int size) {
 		Pageable pageable = PageRequest.of(page, size);
 
-		Page<HomeDTO> pageResult = homeService.getAllMessages(pageable);
+		Page<HomeDTO> pageResult = homeService.getAllMessages(pageable, searchText);
 
 		List<EntityModel<HomeDTO>> userResources = pageResult.stream().map(homeDTOAssembler::toModel)
 				.collect(Collectors.toList());
@@ -81,15 +81,15 @@ public class HomeApi {
 		
 		//lembrar de adicionar o self a paginação tambem
 		collectionModel.add(WebMvcLinkBuilder.linkTo(
-				WebMvcLinkBuilder.methodOn(HomeApi.class).getAllMessages(page, size)).withSelfRel());
+				WebMvcLinkBuilder.methodOn(HomeApi.class).getAllMessages(searchText, page, size)).withSelfRel());
 
 		if (pageResult.hasNext()) {
 			collectionModel.add(WebMvcLinkBuilder.linkTo(
-					WebMvcLinkBuilder.methodOn(HomeApi.class).getAllMessages(page + 1, size)).withRel("next"));
+					WebMvcLinkBuilder.methodOn(HomeApi.class).getAllMessages(searchText, page + 1, size)).withRel("next"));
 		}
 		if (pageResult.hasPrevious()) {
 			collectionModel.add(WebMvcLinkBuilder.linkTo(
-					WebMvcLinkBuilder.methodOn(HomeApi.class).getAllMessages(page - 1, size)).withRel("prev"));
+					WebMvcLinkBuilder.methodOn(HomeApi.class).getAllMessages(searchText, page - 1, size)).withRel("prev"));
 		}
 
 		return collectionModel;

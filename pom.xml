@@ -57,6 +57,12 @@
 			<scope>runtime</scope>
 		</dependency>
 
+		<!-- Fronend Thymeleaf - Para demonstrar paginação (opcional) -->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>

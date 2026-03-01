@@ -2,6 +2,7 @@ package com.pro.service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
@@ -15,15 +16,22 @@ public class HomeService {
 
 	private List<HomeDTO> homeDtoList;
 
-	public HomeService() {
-		init();
-	}
+//	public HomeService() {
+//		init();
+//	}
 
 	public List<HomeDTO> getAllMessages() {
 		return homeDtoList;
 	}
 
-	public Page<HomeDTO> getAllMessages(Pageable pageable) {
+	public Page<HomeDTO> getAllMessages(Pageable pageable, String searchText) {
+		init();
+		if (searchText != null && !searchText.isEmpty()) {
+			homeDtoList = homeDtoList.stream()
+					.filter(homeDTO -> homeDTO.getMessage().toLowerCase().contains(searchText.toLowerCase()))
+					.collect(Collectors.toList());
+        }
+		
 		int start = (int) pageable.getOffset();
 		int end = Math.min((start + pageable.getPageSize()), homeDtoList.size());
 
@@ -34,27 +42,10 @@ public class HomeService {
 
 	private void init() {
 		homeDtoList = new ArrayList<HomeDTO>();
-
-		HomeDTO m1 = new HomeDTO("mensagem 1");
-		HomeDTO m2 = new HomeDTO("mensagem 2");
-		HomeDTO m3 = new HomeDTO("mensagem 3");
-		HomeDTO m4 = new HomeDTO("mensagem 4");
-		HomeDTO m5 = new HomeDTO("mensagem 5");
-		HomeDTO m6 = new HomeDTO("mensagem 6");
-		HomeDTO m7 = new HomeDTO("mensagem 7");
-		HomeDTO m8 = new HomeDTO("mensagem 8");
-		HomeDTO m9 = new HomeDTO("mensagem 9");
-		HomeDTO m10 = new HomeDTO("mensagem 10");
-
-		homeDtoList.add(m1);
-		homeDtoList.add(m2);
-		homeDtoList.add(m3);
-		homeDtoList.add(m4);
-		homeDtoList.add(m5);
-		homeDtoList.add(m6);
-		homeDtoList.add(m7);
-		homeDtoList.add(m8);
-		homeDtoList.add(m9);
-		homeDtoList.add(m10);
+		
+		for (int i=1; i<=10; i++) {
+			HomeDTO m = new HomeDTO("mensagem " + i);
+			homeDtoList.add(m);
+		}
 	}
 }

@@ -10,6 +10,12 @@ Demonstração do uso de HATEOAS para um projeto Springboot REST
 
 	http://localhost:8080/
 
+### Products
+
+* CRUD Products
+
+	http://localhost:8080/products
+
 ## Endpoints API
 
 ### Home Message

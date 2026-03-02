@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta name="description" content="Pagina Inicial da aplicação">
+    <meta name="keywords" content="pagina-inicial, pagina-home, inicio, home, inicial, index, ...">
+    <meta name="author" content="Dev Academy">
+    <meta name="revisit-after" content="60 days">
+    <meta name="ROBOTS" content="INDEX, FOLLOW">
+    <link rel="icon" th:href="@{/ico/favicon.ico}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Home | Inicio</title>
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        .body-align {
+/*             border: 2px solid #000000; */
+            padding-top: 2%;
+            padding-left: 5%;
+            padding-right: 5%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="w3-light-grey">
+
+<div class="w3-container w3-blue w3-padding">
+    <h2>Product | Início</h2>
+</div>
+
+<div class="w3-container w3-margin-top" style="min-height: 400px;">
+
+    <!-- Card principal -->
+    <div class="w3-card w3-white w3-padding w3-round-large">
+
+        <h3 class="w3-text-dark-grey">Editar Produto</h3>
+
+			<!-- Formulário de edição -->
+    		<div class="w3-card w3-white w3-padding w3-round-large">
+
+        	<h3 class="w3-text-dark-grey">Detalhes do Produto</h3>
+
+        	<!-- Formulário de edição do produto -->
+        	<form th:action="@{/products/edit(href=${product['_links']['self']['href']})}" method="post">
+
+            	<div class="w3-margin-bottom">
+                	<label for="name">Nome do Produto:</label>
+                	<input class="w3-input w3-border w3-round" type="text" id="name" name="name" th:value="${product['name']}" required/>
+            	</div>
+
+            	<div class="w3-margin-bottom">
+	                <label for="price">Preço:</label>
+    	            <input class="w3-input w3-border w3-round" type="number" id="price" name="price" th:value="${product['price']}" required/>
+        	    </div>
+
+            	<div class="w3-center">
+                	<button class="w3-button w3-blue w3-round" type="submit">Salvar alterações</button>
+            	</div>
+			</form>
+
+    		</div>
+
+	</div>
+</div>
+</body>
+</html>

@@ -6,6 +6,7 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -23,7 +24,7 @@ import com.pro.repository.ProductRepository;
 
 @RestController
 @RequestMapping("/api/products")
-public class ProductController {
+public class ProductApi {
 
 	@Autowired
 	private ProductRepository productRepository;
@@ -46,7 +47,13 @@ public class ProductController {
 		List<EntityModel<ProductDTO>> products = productRepository.findAll().stream().map(productDTOAssembler::toModel)
 				.collect(Collectors.toList());
 
-		return CollectionModel.of(products);
+		CollectionModel<EntityModel<ProductDTO>> collection = CollectionModel.of(products);
+
+		collection.add(WebMvcLinkBuilder.linkTo(
+				WebMvcLinkBuilder.methodOn(
+						ProductApi.class).getAllProducts()).withSelfRel());
+
+		return collection;
 	}
 
 	// READ - Obter um produto específico
@@ -79,7 +86,8 @@ public class ProductController {
                 .orElseThrow(() -> new RuntimeException("Produto não encontrado"));
         productRepository.delete(product);
 		
-        //return ResponseEntity.ok("Produto excluído com sucesso");
-        return null;
+        //return ResponseEntity.ok("Produto excluído com sucesso"); alterar para ResponseEntity<String>
+        //return null;
+        return ResponseEntity.noContent().build();  // Retorna 204 sem conteúdo
     }
 }

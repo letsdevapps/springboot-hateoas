@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta name="description" content="Pagina Inicial da aplicação">
+    <meta name="keywords" content="pagina-inicial, pagina-home, inicio, home, inicial, index, ...">
+    <meta name="author" content="Dev Academy">
+    <meta name="revisit-after" content="60 days">
+    <meta name="ROBOTS" content="INDEX, FOLLOW">
+    <link rel="icon" th:href="@{/ico/favicon.ico}">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>Home | Inicio</title>
+	<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        .body-align {
+/*             border: 2px solid #000000; */
+            padding-top: 2%;
+            padding-left: 5%;
+            padding-right: 5%;
+            text-align: center;
+        }
+    </style>
+</head>
+<body class="w3-light-grey">
+
+<div class="w3-container w3-blue w3-padding">
+    <h2>Product | Início</h2>
+</div>
+
+<div class="w3-container w3-margin-top" style="min-height: 400px;">
+
+    <!-- Card principal -->
+    <div class="w3-card w3-white w3-padding w3-round-large">
+
+        <h3 class="w3-text-dark-grey">Lista de Produtos</h3>
+
+			<div class="w3-panel w3-yellow w3-round w3-margin-top" 
+				th:if="${#lists.isEmpty(apiResponse['_embedded'])}">
+            		Nenhum produto encontrado.
+        	</div>
+
+			<div th:unless="${#lists.isEmpty(apiResponse['_embedded'])}">
+				<ul class="w3-ul w3-card-4">
+	    			<li th:each="prod : ${apiResponse['_embedded']['productDTOList']}">
+				        <span th:text="${prod['name']}"></span> - <span th:text="${prod['price']}"></span>
+	
+	        			<!-- Link de edição via HATEOAS -->
+	        			<a th:href="@{/products/edit(href=${prod['_links']['self']['href']})}">Editar</a>
+	
+	        			<!-- Link de exclusão via HATEOAS -->
+	        			<a th:href="@{/products/delete(href=${prod['_links']['self']['href']})}">Excluir</a>
+				    </li>
+				</ul>
+			</div>
+
+	</div>
+</div>
+</body>
+</html>
